@@ -1,11 +1,6 @@
 // app/api/vision/route.ts
 import { NextResponse } from "next/server";
 import { ElevenLabsClient, play } from "elevenlabs";
-import Groq from "groq-sdk";
-
-const groq = new Groq({
-  apiKey: process.env.GROK_API_KEY,
-});
 
 const elevenLabsClient = new ElevenLabsClient({
   apiKey: process.env.ELEVENLABS_API_KEY,
