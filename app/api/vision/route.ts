@@ -1,8 +1,12 @@
 // app/api/vision/route.ts
 import { NextResponse } from "next/server";
 import { ElevenLabsClient, play } from "elevenlabs";
+import Groq from "groq-sdk";
 
-const grokApiKey = process.env.GROK_API_KEY;
+const groq = new Groq({
+  apiKey: process.env.GROK_API_KEY,
+});
+
 const elevenLabsClient = new ElevenLabsClient({
   apiKey: process.env.ELEVENLABS_API_KEY,
 });
@@ -51,7 +55,7 @@ export async function POST(request: Request) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${grokApiKey}`,
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
         },
         body: JSON.stringify(payload),
       }

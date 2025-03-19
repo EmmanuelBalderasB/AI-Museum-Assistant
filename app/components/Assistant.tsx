@@ -94,6 +94,7 @@ const Assistant: React.FC = () => {
             {loading ? "Cargando..." : "Obtener Ficha"}
           </button>
         </form>
+        <AssistantVisualization />
       </div>
 
       {result && (
