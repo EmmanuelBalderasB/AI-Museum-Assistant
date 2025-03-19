@@ -5,6 +5,9 @@ import { ElevenLabsClient, play } from "elevenlabs";
 const elevenLabsClient = new ElevenLabsClient({
   apiKey: process.env.ELEVENLABS_API_KEY,
 });
+console.log(
+  `Auth header: Bearer ${process.env.GROQ_API_KEY?.substring(0, 5)}...`
+);
 const voiceId = "e5WNhrdI30aXpS2RSGm1";
 export async function POST(request: Request) {
   console.log("Request received");
@@ -29,16 +32,12 @@ export async function POST(request: Request) {
             {
               type: "text",
               // text:
-              text: "You are a helpful assistant specialized in art and museums. Give information about the artwork an/or their questions, the artist, the medium, the year, the name, and if applicable, the museum where it is located. Do not respond with anything other than the description. If the image is not of an artwork, respond with 'I'm sorry but i don't recognize this image.' Keep it short and concise.",
+              text: "Da una ficha tecnica de la obra de Campell Tomato Soup de de Andy Warhol",
             },
           ],
         },
-        {
-          role: "user",
-          content: [{ type: "image_url", image_url: { url: imageUrl } }],
-        },
       ],
-      temperature: 0,
+      temperature: 0.3,
       max_completion_tokens: 1024,
       top_p: 1,
       stream: false,
@@ -57,9 +56,10 @@ export async function POST(request: Request) {
     );
 
     if (!groqResponse.ok) {
-      const errorDetails = await groqResponse.json();
+      const errorText = await groqResponse.text();
+      console.error(`Groq API error (${groqResponse.status}): ${errorText}`);
       return NextResponse.json(
-        { error: "Groq API error", details: errorDetails },
+        { error: "Groq API error", details: errorText },
         { status: groqResponse.status }
       );
     }

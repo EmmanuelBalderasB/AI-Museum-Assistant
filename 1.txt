@@ -1,0 +1,32 @@
+const groqResponse = await fetch(
+  "https://api.groq.com/openai/v1/chat/completions",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer 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" // Your new API key
+    },
+    body: JSON.stringify({
+      model: "llama-3.2-90b-vision-preview",
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: "Describe this image briefly." },
+            { type: "image_url", image_url: { url: imageUrl } }
+          ]
+        }
+      ]
+    })
+  }
+);
+
+// Add extensive error logging
+if (!groqResponse.ok) {
+  const errorText = await groqResponse.text();
+  console.error(`Groq API error (${groqResponse.status}): ${errorText}`);
+  return NextResponse.json(
+    { error: "Groq API error", details: errorText },
+    { status: groqResponse.status }
+  );
+}
