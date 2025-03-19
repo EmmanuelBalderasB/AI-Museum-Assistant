@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { ElevenLabsClient, play } from "elevenlabs";
 
+const grokApiKey = process.env.GROK_API_KEY;
 const elevenLabsClient = new ElevenLabsClient({
   apiKey: process.env.ELEVENLABS_API_KEY,
 });
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+          Authorization: `Bearer ${grokApiKey}`,
         },
         body: JSON.stringify(payload),
       }

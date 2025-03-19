@@ -1,6 +1,7 @@
 // components/Assistant.tsx
 "use client";
 import React, { useState } from "react";
+import AssistantVisualization from "./AssistantVisualization";
 
 const Assistant: React.FC = () => {
   const [imageData, setImageData] = useState<string>("");
@@ -57,9 +58,9 @@ const Assistant: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 flex flex-row justify-evenly items-center">
-      <div className="flex flex-col justify-center items-center">
-        <h2 className="text-2xl font-bold text-center mb-4">
+    <div className="max-w-md mx-auto p-4 flex flex-col justify-evenly items-center h-screen w-screen">
+      <div className="flex flex-col justify-center items-center bg-white rounded-lg px-4 py-8">
+        <h2 className="text-2xl font-bold text-center mb-4 text-black">
           Asistente Interactivo Museo
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -68,15 +69,15 @@ const Assistant: React.FC = () => {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="block w-full text-sm text-gray-500
+            className="block w-full text-sm text-black
                      file:mr-4 file:py-2 file:px-4
-                     file:rounded-full file:border-0
+                     file:rounded-full
                      file:text-sm file:font-semibold
-                     file:bg-blue-50 file:text-blue-700
-                     hover:file:bg-blue-100"
+                     file:bg-white file:text-black file:border-2 file:border-black
+                     hover:file:bg-black hover:file:text-white hover:file:border-white transition"
           />
           {/* Display a preview if available */}
-          {previewUrl && (
+          {previewUrl && !result && (
             <div className="mb-4">
               <img
                 src={previewUrl}
@@ -88,12 +89,13 @@ const Assistant: React.FC = () => {
           <button
             type="submit"
             disabled={loading || !imageData}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-white text-black py-2 px-4 rounded-lg border-2 border-black hover:bg-black hover:text-white hover:border-2 hover:border-white transition"
           >
-            {loading ? "Naming..." : "Name Artwork"}
+            {loading ? "Cargando..." : "Obtener Ficha"}
           </button>
         </form>
       </div>
+
       {result && (
         <div className="mt-6 p-4 bg-gray-100 rounded-lg shadow">
           <strong className="block mb-2">Descripcion:</strong>
